@@ -1,17 +1,23 @@
-import React from "react";
-import ReadyBar from "../utils/ReadyBar";
-import MoreButton from "../utils/MoreButton";
-
-export default class Project extends React.Component {
-    render() {
-        return(
-            <div className="project card mb-4 shadow-sm">
-                <h2 className="card-title">{this.props.project.title}</h2>
-                <p>{this.props.project.description}</p>
-                <p>{this.props.project.language}</p>
-                <ReadyBar openIssues={this.props.project.open_issues}/>
-                <MoreButton project={this.props.project}/>
-            </div>
-        );
-    }
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import LabelsList from '../labels/LabelsList';
+import ReadyBar from '../utils/ReadyBar';
+import IssuesCount from '../utils/IssuesCount';
+import isoToDDMMYYYY from '../utils/dateParsing';
+export default function Project(props) {
+  return (
+    <div className="project">
+      <div className="projectHeader">
+        <h2>{props.project.path} - {props.project.humanName}</h2>
+        <LabelsList stackTags={props.project.stackTags}/>
+      </div>
+      <hr />
+      <p>{props.project.description}</p>
+      <div className="projectFooter">
+        <Button href={`/projects/${props.project.path}`}>Репозитории проекта</Button>
+        <ReadyBar count={1}/>
+        <p className="text-muted">Обновлено {isoToDDMMYYYY(props.project.lastUpdated)}</p>
+      </div>
+    </div>
+  );
 }

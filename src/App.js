@@ -1,61 +1,43 @@
-//TODO: Save downloaded projects/issues
-import React from "react";
-import API from "./api/API"
-import Project from "./components/projects/Project";
-import ProjectDetails from "./components/projects/ProjectDetails";
-import ProjectsList from "./components/projects/ProjectsList";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-} from "react-router-dom";
+// TODO: Save downloaded reps/issues
+import React from 'react';
 
-export default class App extends React.Component {
-    state = {
-        projects: [],
-        isLoading: true,
-        showingDetailed: false
-    };
-    async componentDidMount() {
-        await API.get('/reps')
-            .then(response =>
-                response.data.map(project => ({
-                    title: project.name,
-                    description: project.description ? project.description : "Описание не приведено",
-                    language: project.language,
-                    open_issues: project.open_issues
-                })))
-            .then(projects => {
-                this.setState({
-                    projects: projects,
-                    isLoading: false
-                });
-                console.log(projects)
-            })
-            .catch(err => console.log(err));
-    }
-    render() {
-        const projectsArray = this.state.projects.map((project, index) =>
-            <Project project={project} key={index}/>
-        );
-        return(
-            <Router>
-                <Switch>
-                    <Route path={`/projects/:projectName`}>
-                        <ProjectDetails/>
-                    </Route>
-                    <Route path="/projects">
-                        {this.state.isLoading ? <div>Loading, please wait...</div> : (
-                            <ProjectsList projects={projectsArray}/>
-                        )}
-                    </Route>
-                    <Route path="/">
-                        <div>Projects Home</div>
-                        <Link to="/projects">Projects List</Link>
-                    </Route>
-                </Switch>
-            </Router>
-        );
-  }
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCode, faChevronDown, faChevronUp, faTasks, faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons';
+import { faClock, faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
+import { faGithub, faGitlab } from '@fortawesome/free-brands-svg-icons';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import RepsList from './components/reps/RepsList';
+import RepDetails from './components/reps/RepDetails';
+import ProjectsList from './components/projects/ProjectsList';
+import ProjectDetails from './components/projects/ProjectDetails';
+
+library.add(faGithub, faGitlab, faCode, faClock, faChevronDown, faChevronUp,
+            faQuestionCircle, faTasks, faAngleLeft, faAngleRight);
+
+export default function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/reps/:platform/:repPath">
+          <RepDetails/>
+        </Route>
+        <Route path="/reps">
+          <RepsList/>
+        </Route>
+        <Route path="/projects/:projectPath">
+          <ProjectDetails/>
+        </Route>
+        <Route path="/projects">
+          <ProjectsList/>
+        </Route>
+        <Route path="/reps?page=:pageNumber">
+
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
