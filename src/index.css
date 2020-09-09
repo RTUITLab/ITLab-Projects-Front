@@ -22,7 +22,7 @@ code {
 
 .scrollbar {
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 500px;
 }
 
@@ -182,6 +182,9 @@ code {
   display: inline;
   margin-left: 2px;
 }
+.issuesList > .card{
+  background-color: #F8F8F8;
+}
 .paginator {
   height: 38px;
 }
@@ -242,5 +245,8 @@ code {
   }
   .navigationBar {
     margin-right: auto;
+  }
+  .card-deck {
+    display: inline-block;
   }
 }

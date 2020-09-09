@@ -8,18 +8,16 @@ export default function SearchBar(props) {
       case "projectName":
         filteredData = props.data.filter(elem => {
           const projectName = `${elem.path}-${elem.humanName}`;
-          return (projectName.toLowerCase().includes(value))
+          return (!value || projectName.toLowerCase().includes(value))
         });
         break;
       case "name":
         filteredData = props.data.filter(elem => {
-          return (elem.name.toLowerCase().includes(value))
+          return (!value || elem.name.toLowerCase().includes(value))
         });
         break;
     }
     props.updateFunc(filteredData)
-
-
   }
   return (
     <div className="searchBar">

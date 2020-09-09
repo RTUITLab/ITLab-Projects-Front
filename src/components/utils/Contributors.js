@@ -14,7 +14,7 @@ export default function Contributors(props) {
   }, []);
 
   return (
-    <div className="col-md-6">
+    <div className="col-md-4">
       {isLoading ? "" : (
         <div className="card">
           <h4 className="card-title">Разработчики</h4>

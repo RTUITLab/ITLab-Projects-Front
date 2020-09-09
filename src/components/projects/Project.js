@@ -2,7 +2,6 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import LabelsList from '../labels/LabelsList';
 import ReadyBar from '../utils/ReadyBar';
-import IssuesCount from '../utils/IssuesCount';
 import isoToDDMMYYYY from '../utils/dateParsing';
 export default function Project(props) {
   return (

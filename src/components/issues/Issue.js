@@ -20,7 +20,7 @@ export default class Issue extends React.Component {
     const closedAtDate = new Date(this.props.issue.closed_at).toLocaleDateString();
 
     return (
-      <div className="issue card mb-4 shadow-sm">
+      <div className="issue card mb-4">
         <h4><a href={`${this.props.issue.html_url}`}>{this.props.issue.title}</a></h4>
         <div className="text-muted">
           открыт

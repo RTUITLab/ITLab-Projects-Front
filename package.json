@@ -18,7 +18,9 @@
     "react-dom": "^16.13.1",
     "react-loader-spinner": "^3.1.14",
     "react-paginate": "latest",
-    "react-scripts": "3.4.1"
+    "react-scripts": "^3.4.3",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

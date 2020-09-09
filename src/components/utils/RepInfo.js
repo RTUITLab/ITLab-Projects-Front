@@ -3,8 +3,8 @@ import Contributors from './Contributors';
 
 export default function RepInfo(props) {
   return (
-    <div className="repDetailsInfo">
-      <p>{props.rep.meta.description}</p>
+    <div className="row mb-4">
+      <p className="col-md-8">{props.rep.meta.description}</p>
       <Contributors users={props.rep.contributors}/>
     </div>
   );
