@@ -5,6 +5,7 @@ import LoadSpinner from '../utils/Loader';
 import Button from 'react-bootstrap/Button';
 import SearchBar from '../utils/SearchBar';
 import LabelsDropdown from '../utils/LabelsDropdown';
+import FilterBar from '../utils/FilterBar';
 
 
 export default function ProjectsList(props) {
@@ -46,8 +47,7 @@ export default function ProjectsList(props) {
       <div className="navigationBarWrapper">
         {isLoading ? "" :
           <>
-            <SearchBar data={data} updateFunc={updateProjects} searchField="projectName"/>
-            <LabelsDropdown data={data} updateFunc={updateProjects} labels={labels}/>
+            <FilterBar updateFunc={updateProjects} datatype="projects"/>
           </>
           }
       </div>

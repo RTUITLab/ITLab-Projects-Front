@@ -6,9 +6,10 @@ export default function LabelsDropdown(props) {
   const [filterTags, setFilterTags] = useState([]);
 
   useEffect(() => {
-    filter();
+    props.setQuery(filterTags.join('&'));
   }, [filterTags]);
-    function handleSelect(eventKey, e) {
+
+  function handleSelect(eventKey, e) {
     if (filterTags.includes(e.target.text)) {
       const newFilterTags = filterTags.filter((item) => item !== e.target.text);
       setFilterTags(newFilterTags);
@@ -17,15 +18,15 @@ export default function LabelsDropdown(props) {
     }
   }
 
-  function filter() {
+  /*function filter() {
     let filteredData = props.data.filter(elem => {
       if (filterTags.length === 0) {
         return true;
       }
-      return (elem.labels.filter(label => filterTags.includes(label.name)) === filterTags);
+      return (elem.labels.filter(label => filterTags.includes(label)) === filterTags);
     });
     props.updateFunc(filteredData);
-  }
+  }*/
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Button
       variant="success"

@@ -5,6 +5,7 @@ import LoadSpinner from '../utils/Loader';
 import Issue from './Issue';
 import ApiSearchBar from '../utils/ApiSearchBar';
 import Button from 'react-bootstrap/Button';
+import FilterBar from '../utils/FilterBar';
 
 export default function IssuesBoard(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +36,7 @@ export default function IssuesBoard(props) {
       {isLoading ? <LoadSpinner /> : (
         <>
           <div className="navigationBarWrapper">
-            <ApiSearchBar updateFunc={updateIssues} datatype="issues"/>
+            <FilterBar updateFunc={updateIssues} datatype="issues"/>
             {isFilter ? "" :
               <NavigationBar loadRepositoriesPage={loadIssuesPage} pagesCount={pagesCount} />}
             <Button className="toggleContent" href="/projects">Все проекты</Button>

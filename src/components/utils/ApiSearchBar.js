@@ -10,7 +10,7 @@ export default function ApiSearchBar(props) {
     }
     timeoutRef.current = setTimeout(()=> {
       timeoutRef.current = null;
-      value !== "" ? dataSearch(value) : window.location.reload()
+      props.setQuery(value)
     },500);
   }
   function dataSearch(value) {
