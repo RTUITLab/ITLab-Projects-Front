@@ -9,7 +9,7 @@ export default function Label(props) {
   });
 
   function calcBackgroundColor() {
-    setBackgroundColor(`#${intToRGB(hashCode(props.tag))}`)
+    setBackgroundColor(`#${intToRGB(hashCode(props.label))}`)
   }
   function calcTextColor() {
     const rgb = hexToRGB(backgroundColor);
@@ -49,7 +49,7 @@ export default function Label(props) {
 
   return (
     <div className="label" style={labelStyle}>
-      {props.tag}
+      {props.label}
     </div>
   );
 }

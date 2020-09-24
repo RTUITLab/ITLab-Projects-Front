@@ -25,10 +25,10 @@ export default function ProjectsList(props) {
       .catch((err) => console.log(err));
     await API.get(`/labels`)
       .then((response) => {
-        const labelOptions = response.data.labels.map((label, index) => ({
+        const labelOptions = response.data.map((label, index) => ({
           key: index,
-          text: label,
-          value: label,
+          text: label.name,
+          value: label.name,
         }));
         setLabels(labelOptions);
         setIsLoading(false);
@@ -50,7 +50,6 @@ export default function ProjectsList(props) {
             <LabelsDropdown data={data} updateFunc={updateProjects} labels={labels}/>
           </>
           }
-        <Button className="toggleContent" href="/reps">Все репозитории</Button>
       </div>
       <main>
         {isLoading ? <LoadSpinner /> : (

@@ -6,12 +6,10 @@ export default function LabelsList(props) {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     makeLabelsList()
-  }, []);
+  }, [props]);
 
   function makeLabelsList() {
-    let labelsList = props.stackTags.directions.map((tag, index) => <Label tag={tag} key={index} />);
-    labelsList.push(props.stackTags.databases.map((tag, index) => <Label tag={tag} key={index} />));
-    labelsList.push(props.stackTags.frameworks.map((tag, index) => <Label tag={tag} key={index} />));
+    let labelsList = props.labels.map((label, index) => <Label label={label.name} key={index} />);
     setLabels(labelsList);
     setIsLoading(false)
   }

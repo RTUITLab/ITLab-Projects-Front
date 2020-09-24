@@ -14,6 +14,8 @@ import RepsList from './components/reps/RepsList';
 import RepDetails from './components/reps/RepDetails';
 import ProjectsList from './components/projects/ProjectsList';
 import ProjectDetails from './components/projects/ProjectDetails';
+import ProjectIssues from './components/projects/ProjectIssues';
+import IssuesBoard from './components/issues/IssuesBoard';
 
 library.add(faGithub, faGitlab, faCode, faClock, faChevronDown, faChevronUp,
             faQuestionCircle, faTasks, faAngleLeft, faAngleRight);
@@ -28,8 +30,11 @@ export default function App() {
         <Route path="/reps">
           <RepsList/>
         </Route>
+        <Route path="/issues">
+          <IssuesBoard/>
+        </Route>
         <Route path="/projects/:projectPath">
-          <ProjectDetails/>
+          <ProjectIssues/>
         </Route>
         <Route path="/projects">
           <ProjectsList/>

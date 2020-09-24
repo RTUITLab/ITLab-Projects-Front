@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown, FormControl, Button } from 'react-bootstrap';
 
 export default function LabelsDropdown(props) {
   const [value, setValue] = useState('');
   const [filterTags, setFilterTags] = useState([]);
 
-  function handleSelect(eventKey, e) {
+  useEffect(() => {
+    filter();
+  }, [filterTags]);
+    function handleSelect(eventKey, e) {
     if (filterTags.includes(e.target.text)) {
       const newFilterTags = filterTags.filter((item) => item !== e.target.text);
       setFilterTags(newFilterTags);
     } else {
       setFilterTags(filterTags => [...filterTags, e.target.text]);
     }
-    console.log(props.data);
+  }
+
+  function filter() {
     let filteredData = props.data.filter(elem => {
-      const labels = [...elem.stackTags.directions, ...elem.stackTags.databases, ...elem.stackTags.frameworks];
-      return filterTags.includes(labels)
+      if (filterTags.length === 0) {
+        return true;
+      }
+      return (elem.labels.filter(label => filterTags.includes(label.name)) === filterTags);
     });
     props.updateFunc(filteredData);
-    console.log(filterTags);
   }
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Button

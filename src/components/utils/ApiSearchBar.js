@@ -14,7 +14,7 @@ export default function ApiSearchBar(props) {
     },500);
   }
   function dataSearch(value) {
-    API.get(`/reps?filter=${value}`)
+    API.get(`/${props.datatype}?filter=${value}`)
       .then((response) => {
         props.updateFunc(response.data, true)
       })

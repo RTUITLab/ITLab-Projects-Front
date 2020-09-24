@@ -44,7 +44,11 @@ code {
   max-width: 1100px;
 }
 
-.rep {
+.rep  {
+  min-width: 300px !important;
+}
+
+.issue {
   min-width: 300px !important;
 }
 
