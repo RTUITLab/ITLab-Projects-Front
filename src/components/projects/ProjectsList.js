@@ -22,19 +22,22 @@ export default function ProjectsList(props) {
         const projectsList = response.data.map((project, index) => <Project project={project} key={index} />);
         setProjects(projectsList);
         setData(response.data);
-      })
-      .catch((err) => console.log(err));
-    await API.get(`/labels`)
-      .then((response) => {
-        const labelOptions = response.data.map((label, index) => ({
-          key: index,
-          text: label.name,
-          value: label.name,
-        }));
-        setLabels(labelOptions);
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
+    /*await API.get(`/labels`)
+      .then((response) => {
+        let labelOptions = response.data.map((label, index) => ({
+          key: index,
+          text: label.name,
+          type: label.type,
+          value: label.name,
+        }));
+        labelOptions = labelOptions.filter(label => label.type === "rep");
+        setLabels(labelOptions);
+
+      })
+      .catch((err) => console.log(err));*/
   }
 
   function updateProjects(processedData) {
@@ -48,6 +51,7 @@ export default function ProjectsList(props) {
         {isLoading ? "" :
           <>
             <FilterBar updateFunc={updateProjects} datatype="projects"/>
+            <Button className="toggleContent" href="/issues">Все задачи</Button>
           </>
           }
       </div>

@@ -22,11 +22,15 @@ export default function FilterBar(props) {
   async function loadLabels() {
     await API.get(`/labels`)
       .then((response) => {
-        const labelOptions = response.data.map((label, index) => ({
+        let labelOptions = response.data.map((label, index) => ({
           key: index,
           text: label.name,
+          type: label.type,
           value: label.name,
         }));
+        if (props.datatype === "projects") {
+          labelOptions = labelOptions.filter(label => label.type !== "rep");
+        }
         setLabels(labelOptions);
         setIsLoading(false);
       })
