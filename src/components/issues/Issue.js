@@ -28,7 +28,7 @@ export default class Issue extends React.Component {
           <a href={`${this.props.issue.user.html_url}`}>{this.props.issue.user.login}</a>
           <img className="avatar" src={this.props.issue.user.avatar_url} alt={this.props.issue.user.login} />
         </div>
-        <IssueLabels labels={this.props.issue.labels}/>
+        <IssueLabels issue={this.props.issue}/>
         {this.state.detailed ? (
           <div className="issue-more-info">
             <div className="issue-label">Описание</div>
@@ -41,7 +41,6 @@ export default class Issue extends React.Component {
                 <div className="issue-date">{closedAtDate}</div>
               </div>
             )}
-
           </div>
         ) : ''}
         <div className="issue-more-button">
