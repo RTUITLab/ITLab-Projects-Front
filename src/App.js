@@ -18,7 +18,8 @@ import ProjectDetails from './components/projects/ProjectDetails';
 library.add(faGithub, faGitlab, faCode, faClock, faChevronDown, faChevronUp,
             faQuestionCircle, faTasks, faAngleLeft, faAngleRight);
 
-export default function App() {
+export default function App(props) {
+  console.log(props);
   return (
     <Router>
       <Switch>

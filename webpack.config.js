@@ -10,7 +10,7 @@ module.exports = (webpackConfigEnv) => {
   });
 
   return webpackMerge.smart(defaultConfig, {
-    plugins: [new Dotenv()],
+    // plugins: [new Dotenv()],
     // modify the webpack config however you'd like to by adding to this object
   });
 };

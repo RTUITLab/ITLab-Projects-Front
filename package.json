@@ -19,7 +19,7 @@
     "react-dom": "^16.12.0"
   },
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --port 8500",
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
     "lint": "eslint src --ext js",
