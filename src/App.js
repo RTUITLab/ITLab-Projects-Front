@@ -21,7 +21,6 @@ library.add(faGithub, faGitlab, faCode, faClock, faChevronDown, faChevronUp,
             faQuestionCircle, faTasks, faAngleLeft, faAngleRight);
 
 export default function App(props) {
-  console.log(props);
   return (
     <Router>
       <Switch>
@@ -38,7 +37,7 @@ export default function App(props) {
           <ProjectIssues/>
         </Route>
         <Route path="/projects">
-          <ProjectsList/>
+          <ProjectsList url={props.projectsAPIUrl}/>
         </Route>
         <Route path="/reps?page=:pageNumber">
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: "http://localhost:5506/api/projects",
+  baseURL: localStorage.getItem('projectsAPIUrl'),
   responseType: 'json',
 });

@@ -15,4 +15,9 @@ const lifecycles = singleSpaReact({
   },
 });
 
-export const { bootstrap, mount, unmount } = lifecycles;
+export function mount(props) {
+  localStorage.setItem('projectsAPIUrl', props.projectsAPIUrl);
+  return lifecycles.mount(props);
+}
+
+export const { bootstrap, unmount } = lifecycles;
