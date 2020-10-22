@@ -51,14 +51,13 @@ export default function App(props) {
         <Route path="/projects/issues">
           <IssuesBoard />
         </Route>
-        <Route path="/projects/projects/:projectPath">
+        <Route path="/projects/:projectPath">
           <ProjectIssues />
         </Route>
-        <Route path="/projects/projects">
+        <Route path="/projects">
           <ProjectsList url={props.projectsAPIUrl} />
         </Route>
         <Route path="/projects/reps?page=:pageNumber"></Route>
-        <Redirect from="/" to="/projects/projects" />
       </Switch>
     </Router>
   );
