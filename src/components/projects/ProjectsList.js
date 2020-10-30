@@ -3,8 +3,6 @@ import API from '../../api/API';
 import Project from './Project';
 import LoadSpinner from '../utils/Loader';
 import Button from 'react-bootstrap/Button';
-import SearchBar from '../utils/SearchBar';
-import LabelsDropdown from '../utils/LabelsDropdown';
 import FilterBar from '../utils/FilterBar';
 
 
@@ -25,19 +23,6 @@ export default function ProjectsList(props) {
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
-    /*await API.get(`/labels`)
-      .then((response) => {
-        let labelOptions = response.data.map((label, index) => ({
-          key: index,
-          text: label.name,
-          type: label.type,
-          value: label.name,
-        }));
-        labelOptions = labelOptions.filter(label => label.type === "rep");
-        setLabels(labelOptions);
-
-      })
-      .catch((err) => console.log(err));*/
   }
 
   function updateProjects(processedData) {

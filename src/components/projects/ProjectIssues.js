@@ -25,7 +25,8 @@ export default function ProjectIssues() {
       <LoadSpinner />
     );
   }
-  const openedIssues = issues.filter((issue) => (issue.state === 'open' || issue.state === 'opened')).map((issue, index) => <Issue issue={issue} key={index} />);
+  const openedIssues = issues.filter((issue) => (issue.state === 'open' && issue.assignees.length === 0)).map((issue, index) => <Issue issue={issue} key={index} />);
+  const wipIssues = issues.filter((issue) => (issue.state === 'open' && issue.assignees.length !== 0)).map((issue, index) => <Issue issue={issue} key={index} />);
   const closedIssues = issues.filter((issue) => issue.state === 'closed').map((issue, index) => <Issue issue={issue} key={index} />);
   return (
     <>
@@ -34,7 +35,7 @@ export default function ProjectIssues() {
         <hr />
       </header>
       <main>
-        <IssuesList openedIssues={openedIssues} closedIssues={closedIssues} />
+        <IssuesList openedIssues={openedIssues} wipIssues={wipIssues} closedIssues={closedIssues} />
       </main>
     </>
   );
