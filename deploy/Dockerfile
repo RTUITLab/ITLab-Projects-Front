@@ -1,5 +1,7 @@
-FROM nginx:1.17.6-alpine
+FROM nginx:alpine
 
-COPY deploy/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 9002
 
-COPY build /app
+COPY nginx.conf /etc/nginx/nginx.conf
+
+COPY /ITLab-Projects-Front /app

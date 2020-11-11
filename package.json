@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --port 8500",
-    "build": "webpack --mode=production",
+    "build": "webpack --mode=production --config webpack.config.js",
     "analyze": "webpack --mode=production --env.analyze=true",
     "lint": "eslint src --ext js",
     "format": "prettier --write \"./**\"",
