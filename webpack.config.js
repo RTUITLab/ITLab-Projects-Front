@@ -1,5 +1,6 @@
 const webpackMerge = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react");
+const path = require("path");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = (webpackConfigEnv) => {
@@ -8,6 +9,11 @@ module.exports = (webpackConfigEnv) => {
     projectName: "projects",
     webpackConfigEnv,
   });
+
+  defaultConfig.output = {
+    filename: "rtuitlab-projects.js",
+    path: path.resolve(__dirname, "./deploy/ITLab-Projects-Front"),
+  };
 
   return webpackMerge.smart(defaultConfig, {
     // plugins: [new Dotenv()],
