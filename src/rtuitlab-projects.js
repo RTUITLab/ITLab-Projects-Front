@@ -16,7 +16,7 @@ const lifecycles = singleSpaReact({
 });
 
 export function mount(props) {
-  localStorage.setItem('projectsAPIUrl', props.projectsAPIUrl);
+  localStorage.setItem("projectsAPIUrl", props.projectsAPIUrl);
   return lifecycles.mount(props);
 }
 

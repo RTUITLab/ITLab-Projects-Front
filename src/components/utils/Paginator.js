@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactPaginate from 'react-paginate';
+import React from "react";
+import ReactPaginate from "react-paginate";
 
 export default class Paginator extends React.Component {
   constructor(props) {
@@ -24,7 +24,6 @@ export default class Paginator extends React.Component {
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick}
           subContainerClassName="pages pagination"
-
           breakClassName="page-item"
           breakLinkClassName="page-link"
           containerClassName="pagination"

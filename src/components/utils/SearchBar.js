@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function SearchBar(props) {
   function dataSearch(e) {
@@ -6,22 +6,28 @@ export default function SearchBar(props) {
     let filteredData;
     switch (props.searchField) {
       case "projectName":
-        filteredData = props.data.filter(elem => {
+        filteredData = props.data.filter((elem) => {
           const projectName = `${elem.path}-${elem.humanName}`;
-          return (!value || projectName.toLowerCase().includes(value))
+          return !value || projectName.toLowerCase().includes(value);
         });
         break;
       case "name":
-        filteredData = props.data.filter(elem => {
-          return (!value || elem.name.toLowerCase().includes(value))
+        filteredData = props.data.filter((elem) => {
+          return !value || elem.name.toLowerCase().includes(value);
         });
         break;
     }
-    props.updateFunc(filteredData)
+    props.updateFunc(filteredData);
   }
   return (
     <div className="searchBar">
-      <input className="form-control" type="text" placeholder="Поиск" aria-label="Search" onChange={dataSearch}/>
+      <input
+        className="form-control"
+        type="text"
+        placeholder="Поиск"
+        aria-label="Search"
+        onChange={dataSearch}
+      />
     </div>
   );
 }
