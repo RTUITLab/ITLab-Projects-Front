@@ -38,8 +38,8 @@ stages:
         containerRegistry: 'rtuitlab connection by admin'
         repository: 'rtuitlab/itlab-projects-front'
         command: 'buildAndPush'
-        Dockerfile: 'itlab-projects-front/Dockerfile'
-        buildContext: 'itlab-projects-front'
+        Dockerfile: '$(Pipeline.Workspace)/itlab-projects-front/Dockerfile'
+        buildContext: '$(Pipeline.Workspace)/itlab-projects-front'
         tags: |
           $(Build.BuildId)
           latest
