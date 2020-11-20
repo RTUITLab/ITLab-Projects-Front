@@ -1,23 +1,25 @@
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 stages:
-- stage: Build
-  jobs:
-  - job: Build
-    variables:
-      npm_config_cache: $(Pipeline.Workspace)/.npm
-    steps:
-    - task: Cache@2
-      inputs:
-        key: 'npm | "$(Agent.OS)" | package-lock.json'
-        restoreKeys: |
-          npm | "$(Agent.OS)"
-        path: $(npm_config_cache)
-      displayName: Cache npm
-    - task: Npm@1
-      inputs:
-        command: 'ci'
-    - task: Npm@1
-      inputs:
-        command: 'custom'
-        customCommand: 'run build'
+  - stage: Build
+    jobs:
+      - job: Build
+        variables:
+          npm_config_cache: $(Pipeline.Workspace)/.npm
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: Cache npm
+          - task: Npm@1
+            displayName: npm ci
+            inputs:
+              command: "ci"
+          - task: Npm@1
+            displayName: npm run build
+            inputs:
+              command: "custom"
+              customCommand: "run build"
