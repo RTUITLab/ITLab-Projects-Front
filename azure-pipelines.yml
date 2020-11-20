@@ -43,3 +43,20 @@ stages:
         tags: |
           $(Build.BuildId)
           latest
+- stage: UpdateService
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: none
+            - task: SSH@0
+              inputs:
+                sshEndpoint: 'swarm manager'
+                runOptions: 'commands'
+                commands: 'docker service update --image rtuitlab/itlab-projects-front:$(Build.BuildId) itlab_projects-front'
+                readyTimeout: '20000'
