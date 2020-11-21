@@ -16,6 +16,10 @@ export default function ProjectsList(props) {
     loadProjects();
   }, []);
   async function loadProjects() {
+    if (!API.defaults.baseURL) {
+      API.defaults.baseURL = localStorage.getItem("projectsAPIUrl");
+    }
+
     await API.get(`/projects`)
       .then((response) => {
         const projectsList = response.data.map((project, index) => (
