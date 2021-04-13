@@ -1,0 +1,62 @@
+pool:
+  vmImage: "ubuntu-latest"
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        variables:
+          npm_config_cache: $(Pipeline.Workspace)/.npm
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: Cache npm
+          - task: Npm@1
+            displayName: npm ci
+            inputs:
+              command: "ci"
+          - task: Npm@1
+            displayName: npm run build
+            inputs:
+              command: "custom"
+              customCommand: "run build"
+          - publish: deploy
+            artifact: itlab-projects-front
+  - stage: DeployDockerImage
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+      - job: DeployImage
+        steps:
+          - download: current
+            artifact: itlab-projects-front
+          - task: Docker@2
+            displayName: BuildAndPush
+            inputs:
+              containerRegistry: "rtuitlab connection by admin"
+              repository: "rtuitlab/itlab-projects-front"
+              command: "buildAndPush"
+              Dockerfile: "$(Pipeline.Workspace)/itlab-projects-front/Dockerfile"
+              buildContext: "$(Pipeline.Workspace)/itlab-projects-front"
+              tags: |
+                $(Build.BuildId)
+                latest
+  - stage: UpdateService
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: "ubuntu-latest"
+        environment: "production"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: none
+                - task: SSH@0
+                  inputs:
+                    sshEndpoint: "swarm manager"
+                    runOptions: "commands"
+                    commands: "docker service update --image rtuitlab/itlab-projects-front:$(Build.BuildId) itlab_projects-front"
+                    readyTimeout: "20000"

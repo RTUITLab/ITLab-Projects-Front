@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Dropdown, FormControl, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Dropdown, FormControl, Button } from "react-bootstrap";
 
 export default function LabelsDropdown(props) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [filterTags, setFilterTags] = useState([]);
 
   useEffect(() => {
-    props.setQuery(filterTags.join('&'));
+    props.setQuery(filterTags.join("&"));
   }, [filterTags]);
 
   function handleSelect(eventKey, e) {
@@ -14,7 +14,7 @@ export default function LabelsDropdown(props) {
       const newFilterTags = filterTags.filter((item) => item !== e.target.text);
       setFilterTags(newFilterTags);
     } else {
-      setFilterTags(filterTags => [...filterTags, e.target.text]);
+      setFilterTags((filterTags) => [...filterTags, e.target.text]);
     }
   }
 
@@ -42,7 +42,7 @@ export default function LabelsDropdown(props) {
     </Button>
   ));
   const CustomMenu = React.forwardRef(
-    ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+    ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
       return (
         <div
           ref={ref}
@@ -60,19 +60,24 @@ export default function LabelsDropdown(props) {
           <ul className="list-unstyled">
             {React.Children.toArray(children).filter(
               (child) =>
-                !value || child.props.children.toLowerCase().startsWith(value.toLowerCase()),
+                !value ||
+                child.props.children
+                  .toLowerCase()
+                  .startsWith(value.toLowerCase())
             )}
           </ul>
         </div>
       );
-    },
+    }
   );
-  const dropdownItems = props.labels.map((label, index) => <Dropdown.Item eventKey={index} onSelect={handleSelect}>{label.text}</Dropdown.Item>);
+  const dropdownItems = props.labels.map((label, index) => (
+    <Dropdown.Item eventKey={index} onSelect={handleSelect}>
+      {label.text}
+    </Dropdown.Item>
+  ));
   return (
     <Dropdown>
-      <Dropdown.Toggle as={CustomToggle}>
-        Фильтр тегов
-      </Dropdown.Toggle>
+      <Dropdown.Toggle as={CustomToggle}>Фильтр тегов</Dropdown.Toggle>
 
       <Dropdown.Menu as={CustomMenu}>
         <Dropdown.Header>Теги</Dropdown.Header>

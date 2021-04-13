@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  responseType: 'json',
+  baseURL: localStorage.getItem("projectsAPIUrl"),
+  responseType: "json",
+  headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
 });

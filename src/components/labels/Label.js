@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 export default function Label(props) {
   const [backgroundColor, setBackgroundColor] = useState("");
@@ -9,14 +9,17 @@ export default function Label(props) {
   });
 
   function calcBackgroundColor() {
-    setBackgroundColor(`#${intToRGB(hashCode(props.label))}`)
+    setBackgroundColor(`#${intToRGB(hashCode(props.label))}`);
   }
   function calcTextColor() {
     const rgb = hexToRGB(backgroundColor);
-    const brightness = Math.round(((parseInt(rgb[0], 16) * 299) +
-      (parseInt(rgb[1], 16) * 587) +
-      (parseInt(rgb[2], 16) * 114)) / 1000);
-    const color = (brightness > 125) ? 'black' : 'white';
+    const brightness = Math.round(
+      (parseInt(rgb[0], 16) * 299 +
+        parseInt(rgb[1], 16) * 587 +
+        parseInt(rgb[2], 16) * 114) /
+        1000
+    );
+    const color = brightness > 125 ? "black" : "white";
     setTextColor(color);
   }
   function hashCode(str) {
@@ -26,10 +29,8 @@ export default function Label(props) {
     }
     return hash;
   }
-  function intToRGB(i){
-    var c = (i & 0x00FFFFFF)
-      .toString(16)
-      .toUpperCase();
+  function intToRGB(i) {
+    var c = (i & 0x00ffffff).toString(16).toUpperCase();
 
     return "00000".substring(0, 6 - c.length) + c;
   }
@@ -44,7 +45,7 @@ export default function Label(props) {
 
   const labelStyle = {
     backgroundColor: backgroundColor,
-    color: textColor
+    color: textColor,
   };
 
   return (

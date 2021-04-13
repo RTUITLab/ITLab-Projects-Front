@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import API from '../../api/API';
-import Issue from '../issues/Issue';
-import IssuesList from '../issues/IssuesList';
-import LoadSpinner from '../utils/Loader';
-import Project from './Project';
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import API from "../../api/API";
+import Issue from "../issues/Issue";
+import IssuesList from "../issues/IssuesList";
+import LoadSpinner from "../utils/Loader";
+import Project from "./Project";
 
 export default function ProjectIssues() {
   const [issues, setIssues] = useState([]);
@@ -21,13 +20,14 @@ export default function ProjectIssues() {
       .catch((err) => console.log(err));
   }, []);
   if (isLoading) {
-    return (
-      <LoadSpinner />
-    );
+    return <LoadSpinner />;
   }
-  const openedIssues = issues.filter((issue) => (issue.state === 'open' && issue.assignees.length === 0)).map((issue, index) => <Issue issue={issue} key={index} />);
-  const wipIssues = issues.filter((issue) => (issue.state === 'open' && issue.assignees.length !== 0)).map((issue, index) => <Issue issue={issue} key={index} />);
-  const closedIssues = issues.filter((issue) => issue.state === 'closed').map((issue, index) => <Issue issue={issue} key={index} />);
+  const openedIssues = issues
+    .filter((issue) => issue.state === "open" || issue.state === "opened")
+    .map((issue, index) => <Issue issue={issue} key={index} />);
+  const closedIssues = issues
+    .filter((issue) => issue.state === "closed")
+    .map((issue, index) => <Issue issue={issue} key={index} />);
   return (
     <>
       <header>
@@ -35,7 +35,11 @@ export default function ProjectIssues() {
         <hr />
       </header>
       <main>
-        <IssuesList openedIssues={openedIssues} wipIssues={wipIssues} closedIssues={closedIssues} />
+        <IssuesList
+          openedIssues={openedIssues}
+          wipIssues={wipIssues}
+          closedIssues={closedIssues}
+        />
       </main>
     </>
   );
