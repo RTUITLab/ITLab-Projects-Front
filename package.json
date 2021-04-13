@@ -23,6 +23,7 @@
   "scripts": {
     "start": "webpack-dev-server --port 8500",
     "build": "webpack --mode=production --config webpack.config.js",
+    "developbuild": "webpack --mode=development --config webpack.config.js",
     "analyze": "webpack --mode=production --env.analyze=true",
     "lintTODO": "eslint src --ext js",
     "test": "echo 'fix tests'",
