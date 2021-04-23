@@ -60,7 +60,7 @@ stages:
           - publish: deploy
             artifact: itlab-projects-front
   - stage: DeployDockerImage
-    condition: and(succeeded(), ${{variables.buildImage}}))
+    condition: and(succeeded(), ${{variables.buildImage}})
     jobs:
       - job: DeployImage
         steps:
