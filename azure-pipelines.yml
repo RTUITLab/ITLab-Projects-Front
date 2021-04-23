@@ -23,7 +23,7 @@ variables:
     imageTags: |
       $(Build.BuildId)
       develop
-    serviceName: itlab_projects-develop-front
+    serviceName: itlab-develop_projects-front
   ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
     buildCommand: "run build"
     buildImage: true
@@ -91,5 +91,5 @@ stages:
                   inputs:
                     sshEndpoint: "swarm manager"
                     runOptions: "commands"
-                    commands: "docker service update --image rtuitlab/itlab-projects-front:$(Build.BuildId) ${{variables.serviceName}}"
+                    commands: "docker service update --image rtuitlab/itlab-projects-front:$(Build.BuildId) ${{variables.serviceName}} --with-registry-auth"
                     readyTimeout: "20000"
