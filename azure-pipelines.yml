@@ -56,7 +56,7 @@ stages:
             displayName: npm run build
             inputs:
               command: "custom"
-              customCommand: buildCommand
+              customCommand: ${{variables.buildCommand}}
           - publish: deploy
             artifact: itlab-projects-front
   - stage: DeployDockerImage
