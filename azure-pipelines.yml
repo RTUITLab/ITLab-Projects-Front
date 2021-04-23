@@ -9,7 +9,7 @@ pool:
 
 variables:
   ${{ if notIn(variables['Build.SourceBranchName'], 'master', 'develop') }}:
-    buildCommand: "run development"
+    buildCommand: "run developbuild"
     buildImage: false
     deployService: false
     deployEnvironment: "no"
@@ -81,7 +81,7 @@ stages:
       - deployment: Deploy
         pool:
           vmImage: "ubuntu-latest"
-        environment: ${{deployEnvironment}}
+        environment: ${{variables.deployEnvironment}}
         strategy:
           runOnce:
             deploy:
