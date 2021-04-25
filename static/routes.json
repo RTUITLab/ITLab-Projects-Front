@@ -1,0 +1,16 @@
+{
+  "part": 2,
+  "groups": [
+    {
+      "name": "general",
+      "title": "Общее",
+      "sections": [
+        {
+          "name": "projects",
+          "title": "Проекты",
+          "homeURL": "/projects"
+        }
+      ]
+    }
+  ]
+}

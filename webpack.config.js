@@ -3,6 +3,7 @@ const singleSpaDefaults = require("webpack-config-single-spa-react");
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
 const react = require("react");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = (webpackConfigEnv) => {
   const defaultConfig = {
@@ -12,6 +13,11 @@ module.exports = (webpackConfigEnv) => {
       path: path.resolve(__dirname, "./deploy/ITLab-Projects-Front"),
     },
     entry: "./src/rtuitlab-projects.js",
+    plugins: [
+      new CopyWebpackPlugin({
+        patterns: [{ from: "static" }],
+      }),
+    ],
     module: {
       rules: [
         {
