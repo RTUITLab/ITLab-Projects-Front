@@ -7,6 +7,7 @@ import { FilterContext } from "../filter/FilterContext"
 import { Spinner } from "react-bootstrap"
 import API from "../../api/API"
 import IssueCard from "./IssueCard"
+import IssueNotFound from "./IssueNotFound"
 
 function IssueBar() {
   const { filtersContext } = useContext(FilterContext)
@@ -106,6 +107,9 @@ function IssueBar() {
                   />
                 ))}
             </InfiniteScroll>
+          )}
+          {!issues && !isLoading && (
+            <IssueNotFound />
           )}
         </div>
       </div>

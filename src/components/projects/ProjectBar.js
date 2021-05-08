@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component"
 import API from "../../api/API"
 import ProjectCard from "./ProjectCard"
 import { FilterContext } from "../filter/FilterContext"
+import ProjectNotFound from "./ProjectNotFound"
 
 function ProjectBar(props) {
   const { filtersContext } = useContext(FilterContext)
@@ -90,6 +91,9 @@ function ProjectBar(props) {
                 <ProjectCard {...item} key={index} />
               ))}
           </InfiniteScroll>
+        )}
+        {!projects && !isLoading && (
+          <ProjectNotFound />
         )}
       </div>
       {scrollLoading && (
