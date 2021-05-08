@@ -6,13 +6,13 @@ import MilestoneItemName from './MilestoneItemName'
 
 function MilestoneItem(props) {
 
-  const { title: name, description, estimate: estimateURL, func_task: taskURL, issues } = props
+  const { title: name, description, estimate, func_task: task, issues, id } = props
 
   return (
     <div className="milestone-item">
       <MilestoneItemName name={name} />
       <MilestoneItemDescription description={description} />
-      <MilestoneButtonList estimateURL={estimateURL} taskURL={taskURL} />
+      <MilestoneButtonList estimate={estimate} task={task} id={id} />
       <MilestoneIssueList issues={issues} />
     </div>
   )

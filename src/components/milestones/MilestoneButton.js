@@ -1,39 +1,58 @@
 import React, { useState } from "react"
-import { Button, Modal } from "react-bootstrap"
+import { Button } from "react-bootstrap"
+
+import MilestoneDeleteModal from "./MilestoneDeleteModal"
+import MilestoneShowModal from "./MilestoneShowModal"
+import MilestoneUploadModal from "./MilestoneUploadModal"
 
 function MilestoneButton(props) {
-
-  const { name, variant, url } = props
+  const { name, variant, data, setData, id } = props
 
   const [show, setShow] = useState(false)
-
-  const handleClose = () => setShow(false)
+  const handleShowClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const [upload, setUpload] = useState(false)
+  const handleUploadClose = () => setUpload(false)
+  const handleUpload = () => setUpload(true)
+
+  const [remove, setRemove] = useState(false)
+  const handleRemoveClose = () => setRemove(false)
+  const handleRemove = () => setRemove(true)
+
+  const onClickEvent =
+    name === "Смета" || name === "Функциональное задание"
+      ? handleShow
+      : name === "Удалить смету" || name === "Удалить ФЗ"
+      ? handleRemove
+      : handleUpload
+  
   return (
     <>
-      <Button variant={variant} onClick={handleShow}>
+      <Button variant={variant} onClick={onClickEvent}>
         {name}
       </Button>
-
-      <Modal show={show} onHide={handleClose} size="xl" centered={true} style={{ padding: 0 }}>
-        <Modal.Header closeButton>
-          <Modal.Title>{name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <iframe
-            style={{ width: "100%", height: "60vh" }}
-            title="officeapps-iframe"
-            src={`https://view.officeapps.live.com/op/embed.aspx?src=${url}`}
-            frameBorder="0"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <a href={url} target="_blank" rel="noreferrer">
-            <Button variant="primary">Скачать</Button>
-          </a>
-        </Modal.Footer>
-      </Modal>
+      {(data && (name === "Смета" || name === "Функциональное задание")) && <MilestoneShowModal
+        name={name}
+        handleClose={handleShowClose}
+        show={show}
+        data={data}
+      />}
+      {(name === "Добавить смету" || name === "Добавить ФЗ") && <MilestoneUploadModal
+        name={name}
+        handleClose={handleUploadClose}
+        show={upload}
+        id={id}
+        setData={setData}
+      />}
+      {(data && (name === "Удалить смету" || name === "Удалить ФЗ")) && <MilestoneDeleteModal
+        name={name}
+        handleClose={handleRemoveClose}
+        show={remove}
+        id={id}
+        data={data}
+        setData={setData}
+      />}
     </>
   )
 }

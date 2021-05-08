@@ -7,8 +7,8 @@ function ProjectTagList(props) {
 
   return (
     <div className="project-tag-container">
-      {tags.map((tag, index) => (
-        <ProjectTag value={tag} key={index} />
+      {tags && tags.map((item, index) => (
+        <ProjectTag value={item.tag} key={index} />
       ))}
     </div>
   )

@@ -1,13 +1,24 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { useLocation } from "react-router-dom"
 import axios from "axios"
-import InfiniteScroll from 'react-infinite-scroll-component'
+import InfiniteScroll from "react-infinite-scroll-component"
 
+import { FilterContext } from "../filter/FilterContext"
 import { Spinner } from "react-bootstrap"
 import API from "../../api/API"
 import IssueCard from "./IssueCard"
 
 function IssueBar() {
+  const { filtersContext } = useContext(FilterContext)
+  const [filters] = filtersContext
+
+  const filtersQuery = filters
+    ? `&tag=${filters
+        .filter((item) => item.isToggled === true)
+        .map((item) => item.name)
+        .join("+")}`
+    : ""
+
   const search = new URLSearchParams(useLocation().search).get("search")
   const searchQuery = search ? `&name=${search}` : ""
 
@@ -21,24 +32,29 @@ function IssueBar() {
   useEffect(() => {
     const source = axios.CancelToken.source()
 
-    API.get(`/projects/issues?count=${issuesCount}${searchQuery}`, {
-      cancelToken: source.token
-    }).then((response) => {
-      setIssues(response.data)
-      setIsLoading(false)
-    })
+    API.get(
+      `/projects/issues?count=${issuesCount}${searchQuery}${filtersQuery}`,
+      {
+        cancelToken: source.token
+      }
+    )
+      .then((response) => {
+        setIssues(response.data)
+        setIsLoading(false)
+      })
+      .catch((error) => !axios.isCancel(error) && console.log(error))
 
     return () => {
       source.cancel()
     }
-  }, [searchQuery])
+  }, [searchQuery, filtersQuery])
 
   const fetchMore = () => {
     setScrollLoading(true)
     API.get(
       `/projects/issues?count=${issuesCount}&start=${
         issuesIndex + 30
-      }${searchQuery}`
+      }${searchQuery}${filtersQuery}`
     )
       .then((response) => {
         if (response.data !== null) {
