@@ -1,64 +1,20 @@
-// TODO: Save downloaded reps/issues
-import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import "./App.css"
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faCode,
-  faChevronDown,
-  faChevronUp,
-  faTasks,
-  faAngleLeft,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { faClock, faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
-import { faGithub, faGitlab } from "@fortawesome/free-brands-svg-icons";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import RepsList from "./components/reps/RepsList";
-import RepDetails from "./components/reps/RepDetails";
-import ProjectsList from "./components/projects/ProjectsList";
-import ProjectDetails from "./components/projects/ProjectDetails";
-import ProjectIssues from "./components/projects/ProjectIssues";
-import IssuesBoard from "./components/issues/IssuesBoard";
+import ProjectBoard from "./components/projects/ProjectBoard"
+import IssueBoard from "./components/issues/IssueBoard"
+import ProjectDetails from "./components/details/ProjectDetails"
 
-library.add(
-  faGithub,
-  faGitlab,
-  faCode,
-  faClock,
-  faChevronDown,
-  faChevronUp,
-  faQuestionCircle,
-  faTasks,
-  faAngleLeft,
-  faAngleRight
-);
-
-export default function App(props) {
+function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/projects/reps/:platform/:repPath">
-          <RepDetails />
-        </Route>
-        <Route path="/projects/reps">
-          <RepsList />
-        </Route>
-        <Route path="/projects/issues">
-          <IssuesBoard />
-        </Route>
-        <Route path="/projects/:projectPath">
-          <ProjectIssues />
-        </Route>
-        <Route path="/projects">
-          <ProjectsList url={props.projectsAPIUrl} />
-        </Route>
-        <Route path="/projects/reps?page=:pageNumber"></Route>
+        <Route exact path="/projects" component={ProjectBoard} />
+        <Route exact path="/projects/issues" component={IssueBoard} />
+        <Route exact path="/projects/:id" component={ProjectDetails} />
       </Switch>
     </Router>
-  );
+  )
 }
+
+export default App

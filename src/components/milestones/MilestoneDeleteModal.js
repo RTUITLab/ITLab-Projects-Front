@@ -14,11 +14,13 @@ function MilestoneDeleteModal(props) {
     const fileId = url.split("/").pop()
     setIsLoading(true)
 
+    const API_URL = localStorage.getItem("projectsAPIUrl").split('/').slice(0, -1).join('/')
+
     axios({
       method: "DELETE",
-      url: `${process.env.REACT_APP_MFS_HOST}/mfs/files/${fileId}`,
+      url: `${API_URL}/mfs/files/${fileId}`,
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_MFS_TOKEN}`
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
     })
       .then((response) => {
@@ -34,14 +36,17 @@ function MilestoneDeleteModal(props) {
   }
 
   const updateFileURL = () => {
+
+    const API_URL = localStorage.getItem("projectsAPIUrl")
+
     const endpoint =
       name === "Удалить смету"
-        ? `/projects/estimate/${milestone_id}`
-        : `/projects/task/${milestone_id}`
+        ? `/estimate/${milestone_id}`
+        : `/task/${milestone_id}`
 
     axios({
       method: "DELETE",
-      url: `${process.env.REACT_APP_API_HOST}${endpoint}`,
+      url: `${API_URL}${endpoint}`,
       headers: {
         "Content-Type": "application/json"
       }

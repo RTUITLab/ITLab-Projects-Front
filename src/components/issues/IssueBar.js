@@ -34,7 +34,7 @@ function IssueBar() {
     const source = axios.CancelToken.source()
 
     API.get(
-      `/projects/issues?count=${issuesCount}${searchQuery}${filtersQuery}`,
+      `/issues?count=${issuesCount}${searchQuery}${filtersQuery}`,
       {
         cancelToken: source.token
       }
@@ -53,7 +53,7 @@ function IssueBar() {
   const fetchMore = () => {
     setScrollLoading(true)
     API.get(
-      `/projects/issues?count=${issuesCount}&start=${
+      `/issues?count=${issuesCount}&start=${
         issuesIndex + 30
       }${searchQuery}${filtersQuery}`
     )

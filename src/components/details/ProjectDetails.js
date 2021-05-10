@@ -13,7 +13,7 @@ function ProjectDetails(props) {
   useEffect(() => {
     const source = axios.CancelToken.source()
     
-    API.get(`/projects/${projectId}`, { cancelToken: source.token }).then(
+    API.get(`/${projectId}`, { cancelToken: source.token }).then(
       (response) => {
         setProject(response.data)
       }

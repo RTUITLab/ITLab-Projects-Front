@@ -13,7 +13,7 @@ export function FilterProvider({ children }) {
     const source = axios.CancelToken.source()
 
     if (location.pathname === "/projects/issues") {
-      API.get(`/projects/issues/labels`, {
+      API.get(`/issues/labels`, {
         cancelToken: source.token
       }).then((response) => {
         const tagsSet = response.data.map((item) => {
@@ -22,7 +22,7 @@ export function FilterProvider({ children }) {
         setFilters(tagsSet)
       })
     } else {
-      API.get(`/projects/tags`, {
+      API.get(`/tags`, {
         cancelToken: source.token
       }).then((response) => {
         const tagsSet = [...new Set(response.data.map((item) => item.tag))].map(

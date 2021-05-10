@@ -18,13 +18,16 @@ function MilestoneShowModal(props) {
 
   const handleUpload = () => {
     setIsLoading(true)
+
+    const API_URL = localStorage.getItem("projectsAPIUrl").split('/').slice(0, -1).join('/')
+
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_MFS_HOST}/mfs/files/upload`,
+      url: `${API_URL}/mfs/files/upload`,
       data: fileData,
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${process.env.REACT_APP_MFS_TOKEN}`
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
     })
       .then((response) => {
@@ -38,16 +41,19 @@ function MilestoneShowModal(props) {
   }
 
   const updateFileURL = (id) => {
+
+    const API_URL = localStorage.getItem("projectsAPIUrl")
+
     const endpoint =
       name === "Добавить смету"
-        ? "/projects/estimate"
+        ? "/estimate"
         : name === "Добавить ФЗ"
-        ? "/projects/task"
+        ? "/task"
         : null
 
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API_HOST}${endpoint}`,
+      url: `${API_URL}${endpoint}`,
       data: {
         id: id,
         milestone_id: milestone_id
