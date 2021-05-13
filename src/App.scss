@@ -171,6 +171,10 @@
   }
 }
 
+.infinite-scroll-component__outerdiv {
+  width: 100%;
+}
+
 .project {
   
   &-container {
@@ -180,7 +184,7 @@
 
   &-card {
     margin: 5px;
-    max-width: 550px;
+    max-width: 555px;
     min-width: 290px;
     width: 100%;
     min-height: fit-content;

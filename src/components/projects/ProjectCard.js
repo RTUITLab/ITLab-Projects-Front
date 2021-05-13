@@ -29,7 +29,7 @@ function ProjectCard(props) {
       <ProjectCardDescription description={description} />
 
       {/* link-button, contributors, progress */}
-      {id && contributors && progress && <ProjectCardStats
+      {id && contributors && <ProjectCardStats
         id={id}
         contributors={contributors}
         progress={progress}

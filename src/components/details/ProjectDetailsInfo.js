@@ -14,7 +14,7 @@ function ProjectDetailsInfo(props) {
       {tags && <ProjectTagList tags={tags} />}
       {name && <ProjectDetailsTitle url={url} name={name} />}
       {description && <ProjectDetailsDescription description={description} />}
-      {progress && contributors && lastUpdate && (
+      {contributors && lastUpdate && (
         <ProjectDetailsStats
           progress={progress}
           contributors={contributors}
