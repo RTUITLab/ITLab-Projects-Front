@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Modal, Button, Form, Spinner, Alert } from "react-bootstrap"
 import axios from "axios"
+import { UserManagerContext } from "../utils/UserManagerContext"
 
 function MilestoneShowModal(props) {
   const { name, show, handleClose, id: milestone_id, setData } = props
@@ -8,6 +9,8 @@ function MilestoneShowModal(props) {
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [fileData, setFileData] = useState(null)
+
+  const UserManager = useContext(UserManagerContext)
 
   const handleFile = (event) => {
     const file = event.target.files.item(0)
@@ -19,7 +22,11 @@ function MilestoneShowModal(props) {
   const handleUpload = () => {
     setIsLoading(true)
 
-    const API_URL = localStorage.getItem("projectsAPIUrl").split('/').slice(0, -1).join('/')
+    const API_URL = localStorage
+      .getItem("projectsAPIUrl")
+      .split("/")
+      .slice(0, -1)
+      .join("/")
 
     axios({
       method: "POST",
@@ -36,12 +43,15 @@ function MilestoneShowModal(props) {
       .catch((error) => {
         setIsError(true)
         setIsLoading(false)
+        if (error.response.status === 401)
+          UserManager.accessToken().then((token) =>
+            localStorage.setItem("accessToken", token)
+          )
         console.log(error)
       })
   }
 
   const updateFileURL = (id) => {
-
     const API_URL = localStorage.getItem("projectsAPIUrl")
 
     const endpoint =
@@ -59,7 +69,8 @@ function MilestoneShowModal(props) {
         milestone_id: milestone_id
       },
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
     })
       .then((response) => {
@@ -75,6 +86,10 @@ function MilestoneShowModal(props) {
       .catch((error) => {
         setIsError(true)
         setIsLoading(false)
+        if (error.response.status === 401)
+          UserManager.accessToken().then((token) =>
+            localStorage.setItem("accessToken", token)
+          )
         console.log(error)
       })
   }
@@ -82,7 +97,11 @@ function MilestoneShowModal(props) {
   return (
     <Modal
       show={show}
-      onHide={() => { setFileData(null); setIsError(false); handleClose() }}
+      onHide={() => {
+        setFileData(null)
+        setIsError(false)
+        handleClose()
+      }}
       centered={true}
       style={{ padding: 0 }}
     >
@@ -125,10 +144,7 @@ function MilestoneShowModal(props) {
             <span className="sr-only">Loading...</span>
           </Button>
         )}
-        <Button
-          variant="secondary"
-          onClick={handleClose}
-        >
+        <Button variant="secondary" onClick={handleClose}>
           Отмена
         </Button>
       </Modal.Footer>

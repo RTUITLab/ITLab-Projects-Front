@@ -4,16 +4,19 @@ import "./App.css"
 import ProjectBoard from "./components/projects/ProjectBoard"
 import IssueBoard from "./components/issues/IssueBoard"
 import ProjectDetails from "./components/details/ProjectDetails"
+import { UserManagerProvider } from "./components/utils/UserManagerContext"
 
-function App() {
+function App(props) {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/projects" component={ProjectBoard} />
-        <Route exact path="/projects/issues" component={IssueBoard} />
-        <Route exact path="/projects/:id" component={ProjectDetails} />
-      </Switch>
-    </Router>
+    <UserManagerProvider UserManager={props.UserManager}>
+      <Router>
+        <Switch>
+          <Route exact path="/projects" component={ProjectBoard} />
+          <Route exact path="/projects/issues" component={IssueBoard} />
+          <Route exact path="/projects/:id" component={ProjectDetails} />
+        </Switch>
+      </Router>
+    </UserManagerProvider>
   )
 }
 

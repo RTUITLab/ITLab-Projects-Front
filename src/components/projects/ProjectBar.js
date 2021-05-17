@@ -8,6 +8,7 @@ import API from "../../api/API"
 import ProjectCard from "./ProjectCard"
 import { FilterContext } from "../filter/FilterContext"
 import ProjectNotFound from "./ProjectNotFound"
+import { UserManagerContext } from "../utils/UserManagerContext"
 
 function ProjectBar(props) {
   const { filtersContext } = useContext(FilterContext)
@@ -30,6 +31,8 @@ function ProjectBar(props) {
   const [scrollLoading, setScrollLoading] = useState(false)
   const projectsCount = 30
 
+  const UserManager = useContext(UserManagerContext)
+
   useEffect(() => {
     const source = axios.CancelToken.source()
 
@@ -37,15 +40,23 @@ function ProjectBar(props) {
       cancelToken: source.token
     })
       .then((response) => {
-        setProjects(response.data)
-        setIsLoading(false)
+        if (response.status === 200) {
+          setProjects(response.data)
+          setIsLoading(false)
+        }
       })
-      .catch((error) => !axios.isCancel(error) && console.log(error))
+      .catch((error) => {
+        if (!axios.isCancel(error) && error.response.status === 401)
+          UserManager.accessToken().then((token) =>
+            localStorage.setItem("accessToken", token)
+          )
+        !axios.isCancel(error) && console.log(error)
+      })
 
     return () => {
       source.cancel()
     }
-  }, [searchQuery, filtersQuery])
+  }, [searchQuery, filtersQuery, UserManager])
 
   const fetchMore = () => {
     setScrollLoading(true)
@@ -55,13 +66,21 @@ function ProjectBar(props) {
       }${searchQuery}${filtersQuery}`
     )
       .then((response) => {
-        if (response.data !== null) {
-          setProjectsIndex((prev) => prev + 30)
-          setProjects((prev) => [...prev, ...response.data])
-        } else setHasMore(false)
-        setScrollLoading(false)
+        if (response.status === 200) {
+          if (response.data !== null) {
+            setProjectsIndex((prev) => prev + 30)
+            setProjects((prev) => [...prev, ...response.data])
+          } else setHasMore(false)
+          setScrollLoading(false)
+        }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        if (error.response.status === 401)
+          UserManager.accessToken().then((token) =>
+            localStorage.setItem("accessToken", token)
+          )
+        console.log(error)
+      })
   }
 
   return (
@@ -92,9 +111,7 @@ function ProjectBar(props) {
               ))}
           </InfiniteScroll>
         )}
-        {!projects && !isLoading && (
-          <ProjectNotFound />
-        )}
+        {!projects && !isLoading && <ProjectNotFound />}
       </div>
       {scrollLoading && (
         <div className="loading-item">

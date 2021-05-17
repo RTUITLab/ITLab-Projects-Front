@@ -1,6 +1,7 @@
 import axios from "axios"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Modal, Button, Alert, Spinner } from "react-bootstrap"
+import { UserManagerContext } from "../utils/UserManagerContext"
 
 function MilestoneDeleteModal(props) {
   const { name, show, handleClose, data, setData, id: milestone_id } = props
@@ -9,6 +10,8 @@ function MilestoneDeleteModal(props) {
   const [isLoading, setIsLoading] = useState(false)
 
   const url = name === "Удалить смету" ? data.estimate_url : name === "Удалить ФЗ" ? data.func_task_url : null
+
+  const UserManager = useContext(UserManagerContext)
 
   const handleDelete = () => {
     const fileId = url.split("/").pop()
@@ -23,16 +26,20 @@ function MilestoneDeleteModal(props) {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
     })
-      .then((response) => {
+    .then((response) => {
+      if (response.status === 200) {
         if (response.data === "Successfully deleted file!") {
           updateFileURL()
         }
-      })
-      .catch((error) => {
-        setIsLoading(false)
-        setIsError(true)
-        console.log(error)
-      })
+      }
+    })
+    .catch((error) => {
+      setIsLoading(false)
+      setIsError(true)
+      if (error.response.status === 401)
+        UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
+      console.log(error)
+    })
   }
 
   const updateFileURL = () => {
@@ -48,20 +55,23 @@ function MilestoneDeleteModal(props) {
       method: "DELETE",
       url: `${API_URL}${endpoint}`,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
     })
-      .then((response) => {
-        if (response.status === 200) {
-          setIsLoading(false)
-          setData(null)
-        }
-      })
-      .catch((error) => {
+    .then((response) => {
+      if (response.status === 200) {
         setIsLoading(false)
-        setIsError(true)
-        console.log(error)
-      })
+        setData(null)
+      }
+    })
+    .catch((error) => {
+      setIsLoading(false)
+      setIsError(true)
+      if (error.response.status === 401)
+        UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
+      console.log(error)
+    })
   }
 
   return (

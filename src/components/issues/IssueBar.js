@@ -8,6 +8,7 @@ import { Spinner } from "react-bootstrap"
 import API from "../../api/API"
 import IssueCard from "./IssueCard"
 import IssueNotFound from "./IssueNotFound"
+import { UserManagerContext } from "../utils/UserManagerContext"
 
 function IssueBar() {
   const { filtersContext } = useContext(FilterContext)
@@ -30,6 +31,8 @@ function IssueBar() {
   const [scrollLoading, setScrollLoading] = useState(false)
   const issuesCount = 30
 
+  const UserManager = useContext(UserManagerContext)
+
   useEffect(() => {
     const source = axios.CancelToken.source()
 
@@ -40,15 +43,21 @@ function IssueBar() {
       }
     )
       .then((response) => {
-        setIssues(response.data)
-        setIsLoading(false)
+        if (response.status === 200) {
+          setIssues(response.data)
+          setIsLoading(false)
+        }
       })
-      .catch((error) => !axios.isCancel(error) && console.log(error))
+      .catch((error) => {
+        if (error.response.status === 401)
+          UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
+        !axios.isCancel(error) && console.log(error)
+      })
 
     return () => {
       source.cancel()
     }
-  }, [searchQuery, filtersQuery])
+  }, [searchQuery, filtersQuery, UserManager])
 
   const fetchMore = () => {
     setScrollLoading(true)
@@ -58,13 +67,19 @@ function IssueBar() {
       }${searchQuery}${filtersQuery}`
     )
       .then((response) => {
-        if (response.data !== null) {
-          setIssuesIndex((prev) => prev + 30)
-          setIssues((prev) => [...prev, ...response.data])
-        } else setHasMore(false)
-        setScrollLoading(false)
+        if (response.status === 200) {
+          if (response.data !== null) {
+            setIssuesIndex((prev) => prev + 30)
+            setIssues((prev) => [...prev, ...response.data])
+          } else setHasMore(false)
+          setScrollLoading(false)
+        }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        if (error.response.status === 401)
+          UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
+        console.log(error)
+      })
   }
 
   return (

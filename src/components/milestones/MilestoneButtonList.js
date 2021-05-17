@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
+import { UserManagerContext } from "../utils/UserManagerContext"
 
 import MilestoneButton from "./MilestoneButton"
 
@@ -8,27 +9,12 @@ function MilestoneButtonList(props) {
   const [milestoneEstimate, setMilestoneEstimate] = useState(estimate)
   const [milestoneTask, setMilestoneTask] = useState(task)
 
+  const UserManager = useContext(UserManagerContext)
   const [isAdmin, setIsAdmin] = useState(false)
 
-  const checkIsAdmin = (claim) => {
-    const token = localStorage.getItem('accessToken');
-    
-    if (!token) {
-      return null;
-    }
-
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    if (!payload || !payload.itlab) {
-      return false;
-    }
-
-    return JSON.stringify(payload.itlab).includes(claim);
-  }
-
   useEffect(() => {
-    // claim name
-    if (checkIsAdmin("projects.admin")) setIsAdmin(true)
-  }, [])
+    setIsAdmin(UserManager.checkITLabClaim("projects.admin"))
+  }, [UserManager])
 
   return (
     <div className="milestone-actions-container">
