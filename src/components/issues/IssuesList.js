@@ -9,6 +9,7 @@ export default function IssuesList(props) {
       </div>
       <div className="card mb-4">
         <h3>В процессе</h3>
+        <div className="scrollbar">{props.wipIssues}</div>
       </div>
       <div className="card mb-4">
         <h3>Готово</h3>

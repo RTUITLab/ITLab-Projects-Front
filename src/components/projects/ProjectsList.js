@@ -30,19 +30,6 @@ export default function ProjectsList(props) {
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
-    /*await API.get(`/labels`)
-      .then((response) => {
-        let labelOptions = response.data.map((label, index) => ({
-          key: index,
-          text: label.name,
-          type: label.type,
-          value: label.name,
-        }));
-        labelOptions = labelOptions.filter(label => label.type === "rep");
-        setLabels(labelOptions);
-
-      })
-      .catch((err) => console.log(err));*/
   }
 
   function updateProjects(processedData) {

@@ -35,7 +35,11 @@ export default function ProjectIssues() {
         <hr />
       </header>
       <main>
-        <IssuesList openedIssues={openedIssues} closedIssues={closedIssues} />
+        <IssuesList
+          openedIssues={openedIssues}
+          wipIssues={wipIssues}
+          closedIssues={closedIssues}
+        />
       </main>
     </>
   );
