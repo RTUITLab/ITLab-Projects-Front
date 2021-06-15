@@ -26,7 +26,7 @@
 }
 
 .content__project-container {
-  margin: 10px -5px;
+  margin: 10px -2.5px;
 }
 
 .search-bar {
@@ -203,7 +203,7 @@
 
 .project-card {
   margin: 5px;
-  max-width: 555px;
+  max-width: 535px;
   min-width: 290px;
   width: 100%;
   min-height: -webkit-fit-content;
