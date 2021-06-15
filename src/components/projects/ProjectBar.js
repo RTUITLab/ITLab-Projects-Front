@@ -36,7 +36,7 @@ function ProjectBar(props) {
   useEffect(() => {
     const source = axios.CancelToken.source()
 
-    API.get(`/?count=${projectsCount}${searchQuery}${filtersQuery}`, {
+    API.get(`/v1/projects?count=${projectsCount}${searchQuery}${filtersQuery}`, {
       cancelToken: source.token
     })
       .then((response) => {
@@ -46,7 +46,7 @@ function ProjectBar(props) {
         }
       })
       .catch((error) => {
-        if (!axios.isCancel(error) && error.response.status === 401)
+        if (!axios.isCancel(error) && error.response && error.response.status === 401)
           UserManager.accessToken().then((token) =>
             localStorage.setItem("accessToken", token)
           )
@@ -61,7 +61,7 @@ function ProjectBar(props) {
   const fetchMore = () => {
     setScrollLoading(true)
     API.get(
-      `/?count=${projectsCount}&start=${
+      `/v1/projects?count=${projectsCount}&start=${
         projectsIndex + 30
       }${searchQuery}${filtersQuery}`
     )
@@ -75,7 +75,7 @@ function ProjectBar(props) {
         }
       })
       .catch((error) => {
-        if (error.response.status === 401)
+        if (error.response && error.response.status === 401)
           UserManager.accessToken().then((token) =>
             localStorage.setItem("accessToken", token)
           )

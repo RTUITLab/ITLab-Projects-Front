@@ -36,7 +36,7 @@ function MilestoneDeleteModal(props) {
     .catch((error) => {
       setIsLoading(false)
       setIsError(true)
-      if (error.response.status === 401)
+      if (error.response && error.response.status === 401)
         UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
       console.log(error)
     })
@@ -68,7 +68,7 @@ function MilestoneDeleteModal(props) {
     .catch((error) => {
       setIsLoading(false)
       setIsError(true)
-      if (error.response.status === 401)
+      if (error.response && error.response.status === 401)
         UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
       console.log(error)
     })

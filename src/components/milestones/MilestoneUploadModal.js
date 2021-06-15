@@ -43,7 +43,7 @@ function MilestoneShowModal(props) {
       .catch((error) => {
         setIsError(true)
         setIsLoading(false)
-        if (error.response.status === 401)
+        if (error.response && error.response.status === 401)
           UserManager.accessToken().then((token) =>
             localStorage.setItem("accessToken", token)
           )
@@ -86,7 +86,7 @@ function MilestoneShowModal(props) {
       .catch((error) => {
         setIsError(true)
         setIsLoading(false)
-        if (error.response.status === 401)
+        if (error.response && error.response.status === 401)
           UserManager.accessToken().then((token) =>
             localStorage.setItem("accessToken", token)
           )

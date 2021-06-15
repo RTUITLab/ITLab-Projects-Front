@@ -22,12 +22,12 @@ function ProjectDetails(props) {
   useEffect(() => {
     const source = axios.CancelToken.source()
 
-    API.get(`/${projectId}`, { cancelToken: source.token })
+    API.get(`/v1/projects/${projectId}`, { cancelToken: source.token })
       .then((response) => {
         if (response.status === 200) setProject(response.data)
       })
       .catch((error) => {
-        if (error.response.status === 401)
+        if (error.response && error.response.status === 401)
           UserManager.accessToken().then((token) =>
             localStorage.setItem("accessToken", token)
           )

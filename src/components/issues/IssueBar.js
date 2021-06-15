@@ -37,7 +37,7 @@ function IssueBar() {
     const source = axios.CancelToken.source()
 
     API.get(
-      `/issues?count=${issuesCount}${searchQuery}${filtersQuery}`,
+      `/v1/issues?count=${issuesCount}${searchQuery}${filtersQuery}`,
       {
         cancelToken: source.token
       }
@@ -49,7 +49,7 @@ function IssueBar() {
         }
       })
       .catch((error) => {
-        if (error.response.status === 401)
+        if (error.response && error.response.status === 401)
           UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
         !axios.isCancel(error) && console.log(error)
       })
@@ -62,7 +62,7 @@ function IssueBar() {
   const fetchMore = () => {
     setScrollLoading(true)
     API.get(
-      `/issues?count=${issuesCount}&start=${
+      `/v1/issues?count=${issuesCount}&start=${
         issuesIndex + 30
       }${searchQuery}${filtersQuery}`
     )
@@ -76,7 +76,7 @@ function IssueBar() {
         }
       })
       .catch((error) => {
-        if (error.response.status === 401)
+        if (error.response && error.response.status === 401)
           UserManager.accessToken().then(token => localStorage.setItem("accessToken", token))
         console.log(error)
       })

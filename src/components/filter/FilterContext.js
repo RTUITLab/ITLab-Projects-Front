@@ -16,7 +16,7 @@ export function FilterProvider({ children }) {
     const source = axios.CancelToken.source()
 
     if (location.pathname === "/projects/issues") {
-      API.get(`/issues/labels`, {
+      API.get(`/v1/issues/labels`, {
         cancelToken: source.token
       })
         .then((response) => {
@@ -28,14 +28,14 @@ export function FilterProvider({ children }) {
           }
         })
         .catch((error) => {
-          if (error.response.status === 401)
+          if (error.response && error.response.status === 401)
             UserManager.accessToken().then((token) =>
               localStorage.setItem("accessToken", token)
             )
           console.log(error)
         })
     } else {
-      API.get(`/tags`, {
+      API.get(`/v1/tags`, {
         cancelToken: source.token
       })
         .then((response) => {
@@ -49,7 +49,7 @@ export function FilterProvider({ children }) {
           }
         })
         .catch((error) => {
-          if (error.response.status === 401)
+          if (error.response && error.response.status === 401)
             UserManager.accessToken().then((token) =>
               localStorage.setItem("accessToken", token)
             )
