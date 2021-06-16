@@ -32,7 +32,7 @@ export function FilterProvider({ children }) {
             UserManager.accessToken().then((token) =>
               localStorage.setItem("accessToken", token)
             )
-          console.log(error)
+          !axios.isCancel(error) && console.log(error)
         })
     } else {
       API.get(`/v1/tags`, {
@@ -53,7 +53,7 @@ export function FilterProvider({ children }) {
             UserManager.accessToken().then((token) =>
               localStorage.setItem("accessToken", token)
             )
-          console.log(error)
+          !axios.isCancel(error) && console.log(error)
         })
     }
 

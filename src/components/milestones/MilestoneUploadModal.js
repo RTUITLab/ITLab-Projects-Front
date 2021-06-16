@@ -56,9 +56,9 @@ function MilestoneShowModal(props) {
 
     const endpoint =
       name === "Добавить смету"
-        ? "/estimate"
+        ? "/v1/estimate"
         : name === "Добавить ФЗ"
-        ? "/task"
+        ? "/v1/task"
         : null
 
     axios({

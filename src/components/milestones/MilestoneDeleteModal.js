@@ -48,8 +48,8 @@ function MilestoneDeleteModal(props) {
 
     const endpoint =
       name === "Удалить смету"
-        ? `/estimate/${milestone_id}`
-        : `/task/${milestone_id}`
+        ? `/v1/estimate/${milestone_id}`
+        : `/v1/task/${milestone_id}`
 
     axios({
       method: "DELETE",
