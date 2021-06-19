@@ -20,7 +20,7 @@
     "style-loader": "^2.0.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --port 8500",
+    "start": "webpack-dev-server --port 9002",
     "build": "webpack --mode=production --config webpack.config.js",
     "developbuild": "webpack --mode=development --config webpack.config.js",
     "analyze": "webpack --mode=production --env.analyze=true",
