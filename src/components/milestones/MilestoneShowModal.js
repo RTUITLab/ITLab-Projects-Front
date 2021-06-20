@@ -4,7 +4,9 @@ import { Modal, Button } from "react-bootstrap"
 function MilestoneShowModal(props) {
   const { show, handleClose, name, data } = props
 
-  const url = `${process.env.REACT_APP_MFS_HOST}/mfs${
+  const API_URL = localStorage.getItem("projectsAPIUrl").split('/').slice(0, -1).join('/')
+
+  const url = `${API_URL}/mfs${
     name === "Смета"
       ? data.estimate_url
       : "Функциональное задание"
